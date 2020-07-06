@@ -9,7 +9,7 @@
 import UIKit
 import Firebase
 
-class LoginVC: UIViewController,UITextFieldDelegate {
+class LoginVC: UIViewController,UITextFieldDelegate,Alertable {
 
     //outlets
     @IBOutlet weak var emailField: RoundedTxtF!
@@ -62,9 +62,11 @@ class LoginVC: UIViewController,UITextFieldDelegate {
                         if let errorcode = AuthErrorCode(rawValue: error!._code){
                             switch errorcode{
                             case .invalidEmail:
-                                print("invalid  mail")
+                                self.showAlert("invalid  mail")
+                                
                             default:
-                                print("network issues")
+                                self.showAlert("network issues")
+                               
                             }
                         }
                         // create
@@ -74,9 +76,9 @@ class LoginVC: UIViewController,UITextFieldDelegate {
                                 if let errorcode = AuthErrorCode(rawValue: error!._code){
                                     switch errorcode{
                                     case .invalidEmail:
-                                        print("invalid  mail")
+                                         self.showAlert("invalid  mail")
                                     default:
-                                        print("network issues")
+                                        self.showAlert("network issues")
                                     }
                                 }
                             }else{

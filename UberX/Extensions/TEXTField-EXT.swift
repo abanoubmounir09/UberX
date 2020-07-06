@@ -8,6 +8,7 @@
 
 import UIKit
 import Firebase
+import MapKit
 
 extension HomeVC:UITextFieldDelegate{
     func textFieldDidBeginEditing(_ textField: UITextField) {
@@ -35,8 +36,10 @@ extension HomeVC:UITextFieldDelegate{
         if textField == destinationTextField{
             //MARK:- use of Serach Func()
             self.performSearch()
+            shouldPresentLoadingView(true)
             view.endEditing(true)
         }
+        shouldPresentLoadingView(false)
         return true
     }
 
@@ -54,11 +57,24 @@ extension HomeVC:UITextFieldDelegate{
     func textFieldShouldClear(_ textField: UITextField) -> Bool {
         matchingItems.removeAll()
         tableView.reloadData()
-        for subview in self.view.subviews{
-            if subview.tag == 13 {
-                subview.removeFromSuperview()
+        //remove  user location form firebase
+        DataService.instance.Ref_Users.child(currentUser!).child("tripCoordinate").removeValue()
+        MapView.removeOverlays(MapView.overlays)
+        for annotaion in MapView.annotations{
+            if annotaion.isKind(of: MKPointAnnotation.self){
+                MapView.removeAnnotation(annotaion)
+            }else if annotaion.isKind(of: PassengerAnnotation.self){
+                MapView.removeAnnotation(annotaion)
             }
         }
+         // remove table by two way
+        tableView.removeFromSuperview()
+        //
+//        for subview in self.view.subviews{
+//            if subview.tag == 13 {
+//                subview.removeFromSuperview()
+//            }
+//        }
         centerUserLocation()
         return true
     }
@@ -101,16 +117,22 @@ extension HomeVC:UITableViewDataSource,UITableViewDelegate{
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+//        //To remove any polyline
+//        if route != nil{
+//             self.MapView.removeOverlay(self.route.polyline)
+//        }
+        shouldPresentLoadingView(true)
         let passengerCoordinate = manager?.location?.coordinate
         let passengerAnnotation = PassengerAnnotation(Initcoordinate: passengerCoordinate!, Initkey: currentUser!)
         destinationTextField.text = tableView.cellForRow(at: indexPath)?.textLabel?.text
         let selectedMapItem = matchingItems[indexPath.row]
         let ItemCoordinate = selectedMapItem.placemark.coordinate
-        DataService.instance.Ref_Users.child(currentUser!).updateChildValues(["tripCoordinate":[ItemCoordinate.latitude,
-                                                                                                ItemCoordinate.longitude ]])
+        DataService.instance.Ref_Users.child(currentUser!).updateChildValues(["tripCoordinate":[ItemCoordinate.latitude, ItemCoordinate.longitude ]])
+        dropPibForPlacMark(placeMark: selectedMapItem.placemark)
+        searchMapKitforResultPolyline(forMapItem: selectedMapItem)
         MapView.addAnnotation(passengerAnnotation)
         AnimateTableView(shouldShow: false)
-        print("selected")
+        
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {

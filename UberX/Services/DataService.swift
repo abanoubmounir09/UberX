@@ -39,4 +39,22 @@ class DataService{
         }
     }
     
+    func driverIsAvailable(key:String,handler:@escaping (_ status:Bool?)->Void){
+        DataService.instance.Ref_Drivers.observeSingleEvent(of: .value) { (snapshot) in
+            if let driversnapshot = snapshot.children.allObjects as? [DataSnapshot]{
+                for driver in driversnapshot{
+                    if driver.key == key{ //driverIsOnTrip
+                        if driver.childSnapshot(forPath: "isPickupModeEnabled").value as? Bool == true{
+                            if driver.childSnapshot(forPath: "driverIsOnTrip").value as? Bool == true{
+                                handler(false)
+                            }else{
+                                handler(true)
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
 }

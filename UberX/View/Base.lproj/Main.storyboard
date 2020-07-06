@@ -503,6 +503,100 @@
             </objects>
             <point key="canvasLocation" x="588" y="124.58770614692655"/>
         </scene>
+        <!--Pick UpVC-->
+        <scene sceneID="aon-2p-puc">
+            <objects>
+                <viewController storyboardIdentifier="PickUpVC" id="5hg-ds-fog" customClass="PickUpVC" customModule="UberX" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="2qO-KD-Ypf">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SCs-Po-NXE">
+                                <rect key="frame" x="20" y="30" width="30" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="Qcx-MJ-JEw"/>
+                                    <constraint firstAttribute="width" constant="30" id="WLp-6C-oge"/>
+                                </constraints>
+                                <color key="tintColor" red="1" green="0.14913141730000001" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <state key="normal" image="cancelBtn"/>
+                                <connections>
+                                    <action selector="CancelBTNWaPressed:" destination="5hg-ds-fog" eventType="touchUpInside" id="CkN-vL-6pD"/>
+                                </connections>
+                            </button>
+                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="lTp-bN-DLo">
+                                <rect key="frame" x="111.5" y="15" width="152" height="60"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Ube" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Qix-Wv-NwG">
+                                        <rect key="frame" x="0.0" y="0.0" width="76" height="60"/>
+                                        <fontDescription key="fontDescription" name="AvenirNext-Bold" family="Avenir Next" pointSize="38"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="RX" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pGd-xo-kZx">
+                                        <rect key="frame" x="76" y="0.0" width="76" height="60"/>
+                                        <fontDescription key="fontDescription" name="AvenirNext-Bold" family="Avenir Next" pointSize="38"/>
+                                        <color key="textColor" red="1" green="0.14913141730000001" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="60" id="6ZW-4w-gva"/>
+                                    <constraint firstAttribute="width" constant="152" id="lnl-uH-0qW"/>
+                                </constraints>
+                            </stackView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fao-li-MrD" customClass="RoundedButton" customModule="UberX" customModuleProvider="target">
+                                <rect key="frame" x="20" y="587" width="335" height="60"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="335" id="O8l-33-b8V"/>
+                                    <constraint firstAttribute="height" constant="60" id="zDj-DL-3yB"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="AvenirNext-Heavy" family="Avenir Next" pointSize="26"/>
+                                <state key="normal" title="Accept Tripe">
+                                    <color key="titleColor" red="0.34509803919999998" green="0.33725490200000002" blue="0.83921568629999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="AcceptBTNWasPressed:" destination="5hg-ds-fog" eventType="touchUpInside" id="nuS-IA-Q1v"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="would you like to pick up  this passenger" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9Wu-Bu-80I">
+                                <rect key="frame" x="20" y="543.5" width="335" height="23.5"/>
+                                <fontDescription key="fontDescription" name="Avenir-HeavyOblique" family="Avenir" pointSize="17"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="NFu-hX-hyo" customClass="RoundMapView" customModule="UberX" customModuleProvider="target">
+                                <rect key="frame" x="25" y="171" width="325" height="325"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="325" id="4Bd-B7-6AB"/>
+                                    <constraint firstAttribute="height" constant="325" id="WPL-GK-ISi"/>
+                                </constraints>
+                            </mapView>
+                        </subviews>
+                        <color key="backgroundColor" name="systemIndigoColor" catalog="iPad SDK" colorSpace="catalog"/>
+                        <constraints>
+                            <constraint firstItem="fao-li-MrD" firstAttribute="centerX" secondItem="2qO-KD-Ypf" secondAttribute="centerX" id="Gdc-1z-u7Y"/>
+                            <constraint firstItem="fao-li-MrD" firstAttribute="top" secondItem="9Wu-Bu-80I" secondAttribute="bottom" constant="20" id="JJ4-sR-hYI"/>
+                            <constraint firstItem="lTp-bN-DLo" firstAttribute="top" secondItem="Uc4-iz-yZo" secondAttribute="top" constant="15" id="MDx-i8-CE9"/>
+                            <constraint firstItem="Uc4-iz-yZo" firstAttribute="bottom" secondItem="fao-li-MrD" secondAttribute="bottom" constant="20" id="QYQ-9q-o5k"/>
+                            <constraint firstItem="Uc4-iz-yZo" firstAttribute="trailing" secondItem="9Wu-Bu-80I" secondAttribute="trailing" constant="20" id="Qeb-0g-fvL"/>
+                            <constraint firstItem="SCs-Po-NXE" firstAttribute="top" secondItem="Uc4-iz-yZo" secondAttribute="top" constant="30" id="Tfh-Nj-VZI"/>
+                            <constraint firstItem="9Wu-Bu-80I" firstAttribute="leading" secondItem="Uc4-iz-yZo" secondAttribute="leading" constant="20" id="Wed-ha-pJD"/>
+                            <constraint firstItem="SCs-Po-NXE" firstAttribute="leading" secondItem="Uc4-iz-yZo" secondAttribute="leading" constant="20" id="fOq-cw-o9A"/>
+                            <constraint firstItem="lTp-bN-DLo" firstAttribute="centerX" secondItem="2qO-KD-Ypf" secondAttribute="centerX" id="oB0-q4-UsN"/>
+                            <constraint firstItem="NFu-hX-hyo" firstAttribute="centerY" secondItem="2qO-KD-Ypf" secondAttribute="centerY" id="qhy-k6-8ca"/>
+                            <constraint firstItem="NFu-hX-hyo" firstAttribute="centerX" secondItem="2qO-KD-Ypf" secondAttribute="centerX" id="tRa-0h-orQ"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="Uc4-iz-yZo"/>
+                    </view>
+                    <connections>
+                        <outlet property="pickUpMapView" destination="NFu-hX-hyo" id="gmj-IU-c9C"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="kAE-Vf-na5" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1288.8" y="120.98950524737631"/>
+        </scene>
     </scenes>
     <resources>
         <image name="cancelBtn" width="32" height="31"/>

@@ -11,7 +11,7 @@ import UIKit
 import Firebase
 import MapKit
 
-class UpdateService {
+class UpdateService:HomeVC {
     static var instance = UpdateService()
     
     func updateUserLocation(withlcation coordinate:CLLocationCoordinate2D){
@@ -36,6 +36,35 @@ class UpdateService {
                         }
                     }
                 }
+            }
+        })
+    }
+    
+    func observeTrips(handler:@escaping (_ coordinateDict:Dictionary<String,AnyObject>)->Void){
+        DataService.instance.Ref_Trips.observe(.value) { (snapshot) in
+            if let tripsSnapShot = snapshot.children.allObjects as? [DataSnapshot]{
+                for trip in tripsSnapShot{
+                    if trip.hasChild("passengerKey") &&  trip.hasChild("tripIsAccepted"){
+                        if let tripDict = trip.value as? Dictionary<String,AnyObject>{
+                            handler(tripDict)
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
+    func updateTripWithCoordinateUponREquest(){
+        DataService.instance.Ref_Users.child(currentUser!).observeSingleEvent(of: .value,with: { (snapshot) in
+            let userSnapShot = snapshot.children.allObjects as? DataSnapshot
+            if userSnapShot?.hasChild("userIsDriver") == false{
+                if let userDict = userSnapShot?.value as? Dictionary<String,AnyObject>{
+                    let pickUpArray = userDict["coordinate"] as! NSArray
+                    let destinationArray = userDict["tripCoordinate"] as! NSArray
+                    DataService.instance.Ref_Trips.child(userSnapShot!.key).updateChildValues(["pickupCoordinate":[pickUpArray[0],pickUpArray[1]],"destinationCoordinate":[destinationArray[0],destinationArray[1]],"passengerKey":userSnapShot!.key,"tripIsAccepted":false])
+                }
+            }else{
+                
             }
         })
     }
