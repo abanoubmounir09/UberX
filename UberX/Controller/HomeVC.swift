@@ -52,26 +52,26 @@ class HomeVC: UIViewController,Alertable {
         revealingSplashView.heartAttack = true
         
         //MARK:- retrn completion about available trips
-//        UpdateService.instance.observeTrips { (tripDict) in
-//            if tripDict != nil{
-//                let pickupCoordinateArray = tripDict["pickupCoordinate"] as?  NSArray
-//                    let tripKey = tripDict["passengerKey"] as? String
-//                    let acceptedStatus = tripDict["tripIsAccepted"] as? Bool
-//                if acceptedStatus == false{
-//                    DataService.instance.driverIsAvailable(key: self.currentUser!) { (available) in
-//                        if let avail = available{
-//                            if avail == true{
-//                                let storyBoard = UIStoryboard.init(name: "Main", bundle: Bundle.main)
-//                                let pickUpVC = storyBoard.instantiateViewController(withIdentifier: "PickUpVC") as? PickUpVC
-//                                pickUpVC?.initData(coordinate: CLLocationCoordinate2D(latitude: pickupCoordinateArray![0] as! CLLocationDegrees, longitude: pickupCoordinateArray![1] as! CLLocationDegrees), pasengerKey: tripKey!)
-//                                self.present(pickUpVC!, animated: true, completion: nil)
-//                            }
-//
-//                        }
-//                    }
-//                }
-//            }
-//        }
+        UpdateService.instance.observeTrips { (tripDict) in
+            if tripDict != nil{
+                let pickupCoordinateArray = tripDict["pickupCoordinate"] as?  NSArray
+                    let tripKey = tripDict["passengerKey"] as? String
+                    let acceptedStatus = tripDict["tripIsAccepted"] as? Bool
+                if acceptedStatus == false{
+                    DataService.instance.driverIsAvailable(key: self.currentUser!) { (available) in
+                        if let avail = available{
+                            if avail == true{
+                                let storyBoard = UIStoryboard.init(name: "Main", bundle: Bundle.main)
+                                let pickUpVC = storyBoard.instantiateViewController(withIdentifier: "PickUpVC") as? PickUpVC  
+                                pickUpVC?.initData(coordinate: CLLocationCoordinate2D(latitude: pickupCoordinateArray![0] as! CLLocationDegrees, longitude: pickupCoordinateArray![1] as! CLLocationDegrees), pasengerKey: tripKey!)
+                                self.present(pickUpVC!, animated: true, completion: nil)
+                            }
+
+                        }
+                    }
+                }
+            }
+        }
         
     }
     

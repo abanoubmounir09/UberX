@@ -54,18 +54,39 @@ class UpdateService:HomeVC {
         }
     }
     
+   
+    //MARK:- init new object trip with pasenger location and  destination
     func updateTripWithCoordinateUponREquest(){
-        DataService.instance.Ref_Users.child(currentUser!).observeSingleEvent(of: .value,with: { (snapshot) in
-            let userSnapShot = snapshot.children.allObjects as? DataSnapshot
-            if userSnapShot?.hasChild("userIsDriver") == false{
-                if let userDict = userSnapShot?.value as? Dictionary<String,AnyObject>{
-                    let pickUpArray = userDict["coordinate"] as! NSArray
-                    let destinationArray = userDict["tripCoordinate"] as! NSArray
-                    DataService.instance.Ref_Trips.child(userSnapShot!.key).updateChildValues(["pickupCoordinate":[pickUpArray[0],pickUpArray[1]],"destinationCoordinate":[destinationArray[0],destinationArray[1]],"passengerKey":userSnapShot!.key,"tripIsAccepted":false])
+        DataService.instance.Ref_Users.observeSingleEvent(of: .value,with: { (snapshot) in
+            if let userSnapShot = snapshot.children.allObjects as? [DataSnapshot]{
+                for user in userSnapShot{
+                    if user.key == Auth.auth().currentUser?.uid{
+                        if !user.hasChild("userIsDriver"){ // coordinate tripCoordinate
+                            if let userDict = user.value as? Dictionary<String,AnyObject>{
+                                let pickUpArray = userDict["coordinate"] as! NSArray
+                                let destinationArray = userDict["tripCoordinate"] as! NSArray
+                                DataService.instance.Ref_Trips.child(user.key).updateChildValues(["pickupCoordinate":[pickUpArray[0],pickUpArray[1]],"destinationCoordinate":[destinationArray[0],destinationArray[1]],"passengerKey":user.key,"tripIsAccepted":false])
+                            }
+                        }
+                    }
                 }
-            }else{
-                
             }
         })
     }
+    
+    
+    func acceptTrip(withPassengerKey passengerKey:String,withDriverKey driverKey:String){
+        DataService.instance.Ref_Trips.child(passengerKey).updateChildValues(["driverKey":driverKey,"tripIsAccepted":true])
+        DataService.instance.Ref_Drivers.child(driverKey).updateChildValues(["driverIsOnTrip":true])
+    }
+    
+    func CancelTrip(withPassengerKey passengerKey:String,withDriverKey driverKey:String){
+        DataService.instance.Ref_Trips.child(passengerKey).removeValue()
+        DataService.instance.Ref_Users.child(passengerKey).child("tripCoordinate").removeValue()
+        DataService.instance.Ref_Drivers.child(driverKey).updateChildValues(["driverIsOnTrip":false])
+    }
+    
+    
+    
+    
 }
