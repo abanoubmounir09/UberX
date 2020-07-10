@@ -57,4 +57,66 @@ class DataService{
         }
     }
     
+    func driverIsOnTrip(driverKey:String,handler:@escaping (_ status:Bool?,_ driverKey:String?,_ tripKey:String?)->Void){
+        DataService.instance.Ref_Drivers.child(driverKey).child("driverIsOnTrip").observe(.value) { (driverTripStatusSnapShot) in
+            if let driverTripStatus = driverTripStatusSnapShot.value as? Bool{
+                if driverTripStatus == true {
+                    DataService.instance.Ref_Trips.observeSingleEvent(of: .value) { (tripeSnapShot) in
+                        if let tripsSnapShot = tripeSnapShot.children.allObjects as? [DataSnapshot]{
+                            for trip in tripsSnapShot {
+                                if trip.childSnapshot(forPath: "driverKey").value as? String == driverKey{
+                                    handler(true,driverKey,trip.key)
+                                }else{
+                                    return
+                                }
+                            }
+                        }
+                    }
+                }else{
+                    handler(false,nil,nil)
+                }
+            }
+        }
+    }
+    
+    
+    func passengerIsOnTrip(passengerKey:String,handler:@escaping(_ status:Bool?,_ driverKey:String?,_ tripKey:String?)->Void){
+        DataService.instance.Ref_Trips.observeSingleEvent(of: .value) { (trisSnapShot) in
+            if let tripSnap = trisSnapShot.children.allObjects as? [DataSnapshot]{
+                for trip in tripSnap{
+                    if trip.key == passengerKey{
+                        if trip.childSnapshot(forPath: "tripIsAccepted").value as? Bool == true{
+                            let driverkey = trip.childSnapshot(forPath: "driverKey").value as? String
+                            handler(true,driverkey,trip.key)
+                        }else{
+                            handler(false,nil,nil)
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
+    func userIsDriver(userKey:String,handler:@escaping(_ status:Bool?)->Void){
+        DataService.instance._Ref_Drivers.observeSingleEvent(of: .value) { (driverSnapShot) in
+            if let driverSnapShot = driverSnapShot.children.allObjects as? [DataSnapshot]{
+                for driver in driverSnapShot{
+                    if  driver.key == userKey{
+                        handler(true)
+                    }else{
+                        handler(false)
+                    }
+                }
+            }
+        }
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
 }

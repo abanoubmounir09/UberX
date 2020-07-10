@@ -75,6 +75,30 @@ class HomeVC: UIViewController,Alertable {
         
     }
     
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        DataService.instance.driverIsAvailable(key: self.currentUser!) { (status) in
+            if status == false{
+                DataService.instance.Ref_Trips.observeSingleEvent(of: .value) { (tripsSnapShot) in
+                    if let tripsSnapShot = tripsSnapShot.children.allObjects as? [DataSnapshot]{
+                        for trip in tripsSnapShot{
+                            if trip.childSnapshot(forPath: "driverKey").value as? String == self.currentUser!{
+                                let pickUpCoordinateArray = trip.childSnapshot(forPath: "pickupCoordinate").value as? NSArray
+                                let pickupCoordinate = CLLocationCoordinate2D(latitude:pickUpCoordinateArray![0] as! CLLocationDegrees , longitude: pickUpCoordinateArray![1] as! CLLocationDegrees)
+                                let pickupPlacMark = MKPlacemark(coordinate: pickupCoordinate)
+                                self.dropPibForPlacMark(placeMark: pickupPlacMark)
+                                let mapItem = MKMapItem(placemark: pickupPlacMark)
+                                self.searchMapKitforResultPolyline(forMapItem: mapItem)
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        
+    }
+    
     func checklocatinAuthorization(){
         if CLLocationManager.authorizationStatus() == .authorizedWhenInUse{
             manager?.startUpdatingLocation()
@@ -213,6 +237,9 @@ extension HomeVC:MKMapViewDelegate{
         let lineRendder = MKPolylineRenderer(overlay: self.route.polyline)
         lineRendder.strokeColor = UIColor(red: 216/255, green: 71/255, blue: 30/255, alpha: 0.75)
         lineRendder.lineWidth = 3
+        shouldPresentLoadingView(false)
+        
+        zoom(toFitAnnotationFromMapView: self.MapView)
         return lineRendder
     }
     // MARK:- search func
@@ -271,7 +298,8 @@ extension HomeVC:MKMapViewDelegate{
             
             self.route = response.routes[0]
             self.MapView.addOverlay(self.route.polyline)
-            self.shouldPresentLoadingView(false)
+            let delegate = AppDelegate.getAppDelegate()
+            delegate.window?.rootViewController?.shouldPresentLoadingView(false)
         }
         
     }
