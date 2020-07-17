@@ -80,10 +80,13 @@ class UpdateService:HomeVC {
         DataService.instance.Ref_Drivers.child(driverKey).updateChildValues(["driverIsOnTrip":true])
     }
     
-    func CancelTrip(withPassengerKey passengerKey:String,withDriverKey driverKey:String){
+    func CancelTrip(withPassengerKey passengerKey:String,withDriverKey driverKey:String?){
         DataService.instance.Ref_Trips.child(passengerKey).removeValue()
         DataService.instance.Ref_Users.child(passengerKey).child("tripCoordinate").removeValue()
-        DataService.instance.Ref_Drivers.child(driverKey).updateChildValues(["driverIsOnTrip":false])
+        if driverKey != nil{
+            DataService.instance.Ref_Drivers.child(driverKey!).updateChildValues(["driverIsOnTrip":false])
+        }
+       
     }
     
     

@@ -26,6 +26,7 @@
 		F258688924B330B3000C8EDF /* Alertable.swift in Sources */ = {isa = PBXBuildFile; fileRef = F258688824B330B3000C8EDF /* Alertable.swift */; };
 		F258688B24B33B32000C8EDF /* PickUpVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = F258688A24B33B32000C8EDF /* PickUpVC.swift */; };
 		F258688D24B33C7F000C8EDF /* RoundMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F258688C24B33C7F000C8EDF /* RoundMapView.swift */; };
+		F25C986C24B9C98B000C5A2F /* ext-Mapview.swift in Sources */ = {isa = PBXBuildFile; fileRef = F25C986B24B9C98B000C5A2F /* ext-Mapview.swift */; };
 		F25DDFFB24B08E3000BE11E9 /* PassengerAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = F25DDFFA24B08E3000BE11E9 /* PassengerAnnotation.swift */; };
 		F261C2F624ACCDBC00AC46CC /* DriverAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = F261C2F524ACCDBC00AC46CC /* DriverAnnotation.swift */; };
 		F284537424A6067400CD7602 /* UpdateService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F284537324A6067400CD7602 /* UpdateService.swift */; };
@@ -58,6 +59,7 @@
 		F258688824B330B3000C8EDF /* Alertable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Alertable.swift; sourceTree = "<group>"; };
 		F258688A24B33B32000C8EDF /* PickUpVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickUpVC.swift; sourceTree = "<group>"; };
 		F258688C24B33C7F000C8EDF /* RoundMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundMapView.swift; sourceTree = "<group>"; };
+		F25C986B24B9C98B000C5A2F /* ext-Mapview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ext-Mapview.swift"; sourceTree = "<group>"; };
 		F25DDFFA24B08E3000BE11E9 /* PassengerAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PassengerAnnotation.swift; sourceTree = "<group>"; };
 		F261C2F524ACCDBC00AC46CC /* DriverAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DriverAnnotation.swift; sourceTree = "<group>"; };
 		F284537324A6067400CD7602 /* UpdateService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateService.swift; sourceTree = "<group>"; };
@@ -134,7 +136,7 @@
 		F205D27424A21C0B00E9C854 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				F205D26424A2045B00E9C854 /* HomeVC.swift */,
+				F25C986A24B9C92B000C5A2F /* homeVC */,
 				F206EB8424A3527700BC1DE9 /* LiftSidePanelVc.swift */,
 				F206EB8624A3531700BC1DE9 /* ContainerVC.swift */,
 				F206EB8E24A394A400BC1DE9 /* LoginVC.swift */,
@@ -182,6 +184,15 @@
 				F256D86B24B1D8CC00223432 /* UIViewControllerExt.swift */,
 			);
 			path = Extensions;
+			sourceTree = "<group>";
+		};
+		F25C986A24B9C92B000C5A2F /* homeVC */ = {
+			isa = PBXGroup;
+			children = (
+				F205D26424A2045B00E9C854 /* HomeVC.swift */,
+				F25C986B24B9C98B000C5A2F /* ext-Mapview.swift */,
+			);
+			path = homeVC;
 			sourceTree = "<group>";
 		};
 		F2FA462824A4A06F00260A47 /* Services */ = {
@@ -322,6 +333,7 @@
 				F258688D24B33C7F000C8EDF /* RoundMapView.swift in Sources */,
 				F2082C2924A3965000A5A6FE /* RoundedTxtF.swift in Sources */,
 				F205D27C24A226D100E9C854 /* RoundedShadowView.swift in Sources */,
+				F25C986C24B9C98B000C5A2F /* ext-Mapview.swift in Sources */,
 				F256D86C24B1D8CC00223432 /* UIViewControllerExt.swift in Sources */,
 				F206EB8524A3527700BC1DE9 /* LiftSidePanelVc.swift in Sources */,
 				F284537424A6067400CD7602 /* UpdateService.swift in Sources */,

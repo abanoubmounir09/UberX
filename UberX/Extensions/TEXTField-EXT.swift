@@ -78,7 +78,8 @@ extension HomeVC:UITextFieldDelegate{
         centerUserLocation()
         return true
     }
-
+    
+    //MARK:- func to show and hide tableview
     func AnimateTableView(shouldShow:Bool){
         if shouldShow{
             UIView.animate(withDuration: 0.2) {
@@ -115,22 +116,26 @@ extension HomeVC:UITableViewDataSource,UITableViewDelegate{
         cell.detailTextLabel?.text = mapItem.placemark.title
         return cell ?? UITableViewCell()
     }
-
+    //MARK:- did select row
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 //        //To remove any polyline
 //        if route != nil{
 //             self.MapView.removeOverlay(self.route.polyline)
 //        }
         shouldPresentLoadingView(true)
+        //MARK:- get passenger location and put annotaion
         let passengerCoordinate = manager?.location?.coordinate
         let passengerAnnotation = PassengerAnnotation(Initcoordinate: passengerCoordinate!, Initkey: currentUser!)
+         MapView.addAnnotation(passengerAnnotation)
         destinationTextField.text = tableView.cellForRow(at: indexPath)?.textLabel?.text
+        
         let selectedMapItem = matchingItems[indexPath.row]
         let ItemCoordinate = selectedMapItem.placemark.coordinate
         DataService.instance.Ref_Users.child(currentUser!).updateChildValues(["tripCoordinate":[ItemCoordinate.latitude, ItemCoordinate.longitude ]])
         dropPibForPlacMark(placeMark: selectedMapItem.placemark)
-        searchMapKitforResultPolyline(forMapItem: selectedMapItem)
-        MapView.addAnnotation(passengerAnnotation)
+        
+        searchMapKitforResultPolyline(forOriginMapItem :nil,withDestinationMapItem :selectedMapItem)
+       
         AnimateTableView(shouldShow: false)
         
     }

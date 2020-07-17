@@ -16,10 +16,12 @@ extension UIViewController{
             fadeView?.backgroundColor = UIColor.black
             fadeView?.alpha = 0
             fadeView?.tag = 99
+            
             let spinner = UIActivityIndicatorView()
             spinner.color = UIColor.white
             spinner.style = .whiteLarge
             spinner.center = view.center
+            
             view.addSubview(fadeView!)
             fadeView!.addSubview(spinner)
             spinner.startAnimating()
