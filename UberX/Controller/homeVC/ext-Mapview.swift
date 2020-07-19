@@ -137,9 +137,9 @@ extension HomeVC:MKMapViewDelegate{
             // first rout is the best
             self.route = response.routes[0]
             
-            if self.MapView.overlays.count == 0{
+        //    if self.MapView.overlays.count == 0{
                self.MapView.addOverlay(self.route!.polyline)
-            }
+         //   }
             
             self.zoom(toFitAnnotationFromMapView: self.MapView,forActiveTripWithDriver:false, withKey:nil)
             
@@ -224,6 +224,9 @@ extension HomeVC:MKMapViewDelegate{
         }else if type == .destination{
             let destinationRegion = CLCircularRegion(center: coordinate, radius: 100, identifier: "destination")
             manager?.startMonitoring(for: destinationRegion)
+        }else if type == .isDriverArround{ // to call when passener request a trip
+            let isDriverArround = CLCircularRegion(center: coordinate, radius: 1000, identifier: "isDriverArround")
+            manager?.startMonitoring(for: isDriverArround)
         }
     }
 }
